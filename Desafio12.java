@@ -1,37 +1,39 @@
+
+
 package albino;
 
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-public class Desafio12 {
-	
+public class  Desafio12{
+
 	//CLIENTES
 	static ArrayList<String> clientes = new ArrayList<String>();
 	static ArrayList<String> cnpjs = new ArrayList<String>();
 	static ArrayList<String> emailsClientes = new ArrayList<String>();
 	static ArrayList<String> celularesClientes = new ArrayList<String>();
-	
+
 	//FUNCIONARIOS
 	static ArrayList<String> funcionarios = new ArrayList<String>();
 	static ArrayList<String> cpfs = new ArrayList<String>();
 	static ArrayList<String> emailsFuncionarios = new ArrayList<String>();
 	static ArrayList<String> celularesFuncionarios = new ArrayList<String>();
-	
+
 	//SERVICOS
-	
+
 	static ArrayList<String> servicos = new ArrayList<String>();
 	static ArrayList<Double> valorServicos = new ArrayList<Double>();
 	static ArrayList<Integer> qntServicos = new ArrayList<Integer>();
-	
+
 	public static void main(String[] args) {
-		
+
 		String cliente, cnpj, emailCliente, celularCliente, funcionario, cpf, emailFuncionario, celularFuncionario;
 		Double valorServico;
 		Integer qntServico;
-		
 
-		int controle, indice;
+
+		int controle = -1, indice;
 
 		StringBuffer menu = new StringBuffer();
 		menu.append("1 - Cadastro clientes");
@@ -57,6 +59,7 @@ public class Desafio12 {
 
 			case 1:
 				//				1 -  CLIENTES
+
 				StringBuffer menuClientes = new StringBuffer();
 				menuClientes.append("MENU CLIENTES");
 				menuClientes.append("\n\n");
@@ -70,31 +73,64 @@ public class Desafio12 {
 				menuClientes.append("\n");
 				menuClientes.append("0 - Voltar ao menu principal");
 
-				controle = jopInt(menuClientes.toString());
 
-				switch (controle) {
-				case 1:
-					//1 - INCLUIR CLIENTE
-					break;
-				case 2:
-					//2 - ALTERAR CLIENTE
-					break;
-				case 3:
-					//3 - EXCLUIR CLIENTE
-					break;
-				case 4:
-					//3 - LISTAR CLIENTE
-					break;
-				case 0:
-					//0 - VOLTAR AO MENU PRINCIPAL
-					controle = jopInt(menu.toString());
-					break;
+				int controleClientes = -1;
+				controleClientes = jopInt(menuClientes.toString());
+				while (controleClientes != 0) {
 
-				default:
+					switch (controleClientes) {
+					case 1:
+						//1 - INCLUIR CLIENTE
+						cliente        = jopStr("Digite o nome do cliente que deseja incluir");
+						cnpj           = jopStr("Digite o CNPJ do cliente que deseja incluir");
+						emailCliente   = jopStr("Digite o e-mail do cliente que deseja incluir");
+						celularCliente = jopStr("Digite o número celular do cliente que deseja incluir");
+
+						//Adicionando dados na lista
+
+						incluirCliente (cliente,cnpj,emailCliente,  celularCliente);
+
+						break;
+					case 2:
+						//2 - ALTERAR CLIENTE
+						
+						indice = 0;
+						indice = jopInt(listaIndiceClientes());
+						
+						cliente        = jopStr("Digite o novo nome do cliente "+clientes.get(indice));
+						cnpj           = jopStr("Digite o CNPJ do cliente que deseja incluir");
+						emailCliente   = jopStr("Digite o e-mail do cliente que deseja incluir");
+						celularCliente = jopStr("Digite o número celular do cliente que deseja incluir");
+						
+						alterarCliente(indice, cliente,cnpj,emailCliente,  celularCliente);
+						
+						jop("Cliente "+clientes.get(indice)+ "alterado com sucesso!");
+						break;
+					case 3:
+						//3 - EXCLUIR CLIENTE
+						indice = 0;
+						indice = jopInt(listaIndiceClientes());
+						remClientes(indice);
+						break;
+					case 4:
+						//3 - LISTAR CLIENTE
+						jop(listaClientes());
+						break;
+					case 0:
+						//0 - VOLTAR AO MENU PRINCIPAL
+
+						break;
+
+					default:
+						jop("Opção Inválida");
+
+
+						break;
+					}
+
 					break;
 				}
-
-				break;
+				controle = jopInt(menu.toString());
 			case 2:
 				//				2 - FUNCIONARIOS
 
@@ -111,36 +147,69 @@ public class Desafio12 {
 				menuFuncionarios.append("\n");
 				menuFuncionarios.append("0 - Voltar ao menu principal");
 
-				controle = jopInt(menuFuncionarios.toString());
+				int controleFuncionarios = -1;
+				controleFuncionarios = jopInt(menuFuncionarios.toString());
+				while (controleFuncionarios != 0) {
 
-				switch (controle) {
-				case 1:
-					//1 - INCLUIR FUNCIONARIOS
-					break;
-				case 2:
-					//2 - ALTERAR FUNCIONARIOS
-					break;
-				case 3:
-					//3 - EXCLUIR FUNCIONARIOS
-					break;
-				case 4:
-					//4 - LISTAR FUNCIONARIOS
-					break;
-				case 0:
-					//0 - VOLTAR AO MENU PRINCIPAL
-					controle = jopInt(menu.toString());
-					break;
+					switch (controleFuncionarios) {
+					case 1:
+						//1 - INCLUIR FUNCIONARIOS
+						funcionario        = jopStr("Digite o nome do funcionário que deseja incluir");
+						cpf           = jopStr("Digite o CPF do funcionário que deseja incluir");
+						emailFuncionario   = jopStr("Digite o e-mail do funcionário que deseja incluir");
+						celularFuncionario = jopStr("Digite o número celular do funcionário que deseja incluir");
 
-				default:
+						//Adicionando dados na lista
+
+						incluirFuncionario (funcionario,cpf,emailFuncionario,  celularFuncionario);
+
+						break;
+					case 2:
+						//2 - ALTERAR FUNCIONARIOS
+						
+						indice = 0;
+						indice = jopInt(listaIndiceFuncionarios());
+						
+						funcionario        = jopStr("Digite o nome correto do funcionário: ");
+						cpf           = jopStr("CPF:");
+						emailFuncionario   = jopStr("E-mail:");
+						celularFuncionario = jopStr("CELULAR: ");
+						
+						alterarFuncionario(indice, funcionario, cpf, emailFuncionario, celularFuncionario);
+						jop("Funcionário "+funcionarios.get(indice)+ "alterado com sucesso!");
+						
+						break;
+					case 3:
+						//3 - EXCLUIR FUNCIONARIOS
+						indice = 0;
+						indice = jopInt(listaIndiceFuncionarios());
+						remFuncionarios(indice);
+
+
+						break;
+					case 4:
+						//4 - LISTAR FUNCIONARIOS
+						jop(listaFuncionarios());
+
+						break;
+					case 0:
+						//0 - VOLTAR AO MENU PRINCIPAL
+						controle = jopInt(menu.toString());
+						break;
+
+					default:
+						jop("Opção Inválida");
+						break;
+					}
+
 					break;
 				}
-
-				break;
-
+				controle = jopInt(menu.toString());
 
 			case 3:
 				//				3 - SERVICOS
-				
+
+
 				StringBuffer menuServicos = new StringBuffer();
 				menuServicos.append("MENU SERVIÇOS");
 				menuServicos.append("\n\n");
@@ -154,33 +223,36 @@ public class Desafio12 {
 				menuServicos.append("\n");
 				menuServicos.append("0 - Voltar ao menu principal");
 
-				controle = jopInt(menuServicos.toString());
+				int controleServicos = -1;
+				controleServicos = jopInt(menuServicos.toString());
+				while (controleServicos != 0) {
 
-				switch (controle) {
-				case 1:
-					//1 - INCLUIR SERVICO
-					break;
-				case 2:
-					//2 - ALTERAR SERVICO
-					break;
-				case 3:
-					//3 - EXCLUIR
-				case 4:
-					//4 - LISTAR SERVICOS CADASTRADOS
-					break;
-				case 0:
-					//0 - VOLTAR AO MENU PRINCIPAL
-					controle = jopInt(menu.toString());
-					break;
+					switch (controleServicos) {
+					case 1:
+						//1 - INCLUIR SERVICO
+						break;
+					case 2:
+						//2 - ALTERAR SERVICO
+						break;
+					case 3:
+						//3 - EXCLUIR
+					case 4:
+						//4 - LISTAR SERVICOS CADASTRADOS
+						break;
+					case 0:
+						//0 - VOLTAR AO MENU PRINCIPAL
+						break;
 
-				default:
+					default:
+						break;
+					}
 					break;
 				}
-				break;
-				
+				controle = jopInt(menu.toString());
 			case 4:
 				//				4 - VENDAS
-				
+
+
 				StringBuffer menuVendas = new StringBuffer();
 				menuVendas.append("MENU VENDAS");
 				menuVendas.append("\n\n");
@@ -194,31 +266,33 @@ public class Desafio12 {
 				menuVendas.append("\n");
 				menuVendas.append("0 - Voltar ao menu principal");
 
-				controle = jopInt(menuVendas.toString());
+				int controleVendas = -1;
+				controleVendas = jopInt(menuVendas.toString());
+				while (controleVendas != 0) {
 
-				switch (controle) {
-				case 1:
-					//1 - REALIZAR VENDA
-					break;
-				case 2:
-					//2 - ALTERAR VENDAS
-					break;
-				case 3:
-					//3 - EXCLUIR VENDAS
-					break;
-				case 4:
-					//4 - LISTAR VENDAS
-					break;
-				case 0:
-					//0 - VOLTAR AO MENU PRINCIPAL
-					controle = jopInt(menu.toString());
-					break;
+					switch (controleVendas) {
+					case 1:
+						//1 - REALIZAR VENDA
+						break;
+					case 2:
+						//2 - ALTERAR VENDAS
+						break;
+					case 3:
+						//3 - EXCLUIR VENDAS
+						break;
+					case 4:
+						//4 - LISTAR VENDAS
+						break;
+					case 0:
+						//0 - VOLTAR AO MENU PRINCIPAL
+						break;
 
-				default:
-					break;
+					default:
+						break;
+					}
 				}
+				controle = jopInt(menu.toString());					
 				break;
-				
 			case 0:
 				//				0 - SAIR
 				break;
@@ -243,4 +317,154 @@ public class Desafio12 {
 		texto = JOptionPane.showInputDialog(mensagem);
 		return texto;
 	}
+
+	public static void jop(String mensagem) {
+		JOptionPane.showMessageDialog(null, mensagem);
+	}
+
+	public static void incluirCliente (String cliente, String cnpj, String emailCliente, String celularCliente) {
+		clientes.add(cliente);
+		cnpjs.add(cnpj);
+		emailsClientes.add(emailCliente);
+		celularesClientes.add(celularCliente);
+		jop("Cliente Adicionado!");
+
+	}
+	public static void alterarCliente (int indice, String cliente, String cnpj, String emailCliente, String celularCliente) {
+		
+		clientes.remove(indice);
+		clientes.add(cliente);
+		cnpjs.remove(indice);
+		cnpjs.add(cnpj);
+		emailsClientes.remove(indice);
+		emailsClientes.add(emailCliente);
+		celularesClientes.remove(indice);
+		celularesClientes.add(celularCliente);
+		
+		}
+	
+
+public static void remClientes (int indice) {
+	
+	clientes.remove(indice);
+	cnpjs.remove(indice); 
+	emailsClientes.remove(indice);
+	celularesClientes.remove(indice);
+	jop("Cliente Indice "+indice+  " foi removido! ");
+	
 }
+	public static String listaClientes () {
+		StringBuffer listaClientes = new StringBuffer();
+		listaClientes.append("Lista de clientes!");
+		listaClientes.append("\n");
+		listaClientes.append("========================");
+		listaClientes.append("\n");
+
+		for (int i = 0; i < clientes.size(); i++) {
+
+			listaClientes.append("Cliente: ");
+			listaClientes.append(clientes.get(i));
+			listaClientes.append("\n");
+			listaClientes.append("Cnpj ");
+			listaClientes.append(cnpjs.get(i));
+			listaClientes.append("\n");
+			listaClientes.append("Email: ");
+			listaClientes.append(emailsClientes.get(i));
+			listaClientes.append("\n");
+			listaClientes.append("Celular: ");
+			listaClientes.append(celularesClientes.get(i));
+			listaClientes.append("\n");
+			listaClientes.append("========================");
+			listaClientes.append("\n");
+		}
+		return listaClientes.toString();
+	}
+
+
+	public static void incluirFuncionario (String funcionario, String cpf, String emailFuncionario, String celularFuncionario) {
+		funcionarios.add(funcionario);
+		cpfs.add(cpf);
+		emailsFuncionarios.add(emailFuncionario);
+		celularesFuncionarios.add(celularFuncionario);
+		jop("Funcionário Adicionado!");
+	}
+	
+	public static void alterarFuncionario (int indice, String funcionario, String cpf, String emailFuncionario, String celularFuncionario) {
+	
+		funcionarios.remove(indice);
+		funcionarios.add(funcionario);
+		cpfs.remove(indice); 
+		cpfs.add(cpf);
+		emailsFuncionarios.remove(indice);
+		emailsFuncionarios.add(emailFuncionario);
+		celularesFuncionarios.remove(indice);
+		celularesFuncionarios.add(celularFuncionario);
+	}
+
+
+	public static void remFuncionarios (int indice) {
+
+		funcionarios.remove(indice);
+		cpfs.remove(indice); 
+		emailsFuncionarios.remove(indice);
+		celularesFuncionarios.remove(indice);
+		jop("Funcionário Indice "+indice+  " foi removido! ");
+
+
+	}    		
+
+	public static String listaFuncionarios () {
+		StringBuffer listaFuncionarios = new StringBuffer();
+		listaFuncionarios.append("Lista de Funcionários!");
+		listaFuncionarios.append("\n");
+		listaFuncionarios.append("========================");
+		listaFuncionarios.append("\n");
+
+		for (int i = 0; i < funcionarios.size(); i++) {
+			listaFuncionarios.append("Funcionário: ");
+			listaFuncionarios.append(funcionarios.get(i));
+			listaFuncionarios.append("\n");
+			listaFuncionarios.append("CPF ");
+			listaFuncionarios.append(cpfs.get(i));
+			listaFuncionarios.append("\n");
+			listaFuncionarios.append("Email: ");
+			listaFuncionarios.append(emailsFuncionarios.get(i));
+			listaFuncionarios.append("\n");
+			listaFuncionarios.append("Celular: ");
+			listaFuncionarios.append(celularesFuncionarios.get(i));
+			listaFuncionarios.append("\n");
+			listaFuncionarios.append("========================");
+			listaFuncionarios.append("\n");
+		}
+		return listaFuncionarios.toString();
+	}
+	public static String listaIndiceFuncionarios () {
+		StringBuffer lista = new StringBuffer();
+		lista.append("Lista de Funcionários por índice!");
+		lista.append("\n");
+		lista.append("========================");
+		lista.append("\n");
+
+		for (int i = 0; i < funcionarios.size(); i++) {
+			lista.append(i+" - Funcionário: "+funcionarios.get(i)+" Celular: "+celularesFuncionarios.get(i));
+			lista.append("\n");
+
+		}
+		return lista.toString();
+	}
+	public static String listaIndiceClientes () {
+		StringBuffer lista = new StringBuffer();
+		lista.append("Lista de Clientes por índice!");
+		lista.append("\n");
+		lista.append("========================");
+		lista.append("\n");
+
+		for (int i = 0; i < clientes.size(); i++) {
+			lista.append(i+" - Cliente: "+clientes.get(i)+" Celular: "+celularesClientes.get(i));
+			lista.append("\n");
+
+		}
+		return lista.toString();
+	}
+}  
+
