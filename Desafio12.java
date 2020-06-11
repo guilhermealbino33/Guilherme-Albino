@@ -26,9 +26,12 @@ public class  Desafio12{
 	static ArrayList<Double> valorServicos = new ArrayList<Double>();
 	static ArrayList<Integer> qntServicos = new ArrayList<Integer>();
 
+	//VENDAS
+
+
 	public static void main(String[] args) {
 
-		String cliente, cnpj, emailCliente, celularCliente, funcionario, cpf, emailFuncionario, celularFuncionario;
+		String cliente, cnpj, emailCliente, celularCliente, funcionario, cpf, emailFuncionario, celularFuncionario, servico;
 		Double valorServico;
 		Integer qntServico;
 
@@ -93,17 +96,17 @@ public class  Desafio12{
 						break;
 					case 2:
 						//2 - ALTERAR CLIENTE
-						
+
 						indice = 0;
 						indice = jopInt(listaIndiceClientes());
-						
+
 						cliente        = jopStr("Digite o novo nome do cliente "+clientes.get(indice));
 						cnpj           = jopStr("Digite o CNPJ do cliente que deseja incluir");
 						emailCliente   = jopStr("Digite o e-mail do cliente que deseja incluir");
 						celularCliente = jopStr("Digite o número celular do cliente que deseja incluir");
-						
+
 						alterarCliente(indice, cliente,cnpj,emailCliente,  celularCliente);
-						
+
 						jop("Cliente "+clientes.get(indice)+ "alterado com sucesso!");
 						break;
 					case 3:
@@ -166,18 +169,18 @@ public class  Desafio12{
 						break;
 					case 2:
 						//2 - ALTERAR FUNCIONARIOS
-						
+
 						indice = 0;
 						indice = jopInt(listaIndiceFuncionarios());
-						
+
 						funcionario        = jopStr("Digite o nome correto do funcionário: ");
 						cpf           = jopStr("CPF:");
 						emailFuncionario   = jopStr("E-mail:");
 						celularFuncionario = jopStr("CELULAR: ");
-						
+
 						alterarFuncionario(indice, funcionario, cpf, emailFuncionario, celularFuncionario);
 						jop("Funcionário "+funcionarios.get(indice)+ "alterado com sucesso!");
-						
+
 						break;
 					case 3:
 						//3 - EXCLUIR FUNCIONARIOS
@@ -229,15 +232,35 @@ public class  Desafio12{
 
 					switch (controleServicos) {
 					case 1:
-						//1 - INCLUIR SERVICO
+						// 1 - INCLUIR SERVICO
+
+						servico = jopStr("Digite o tipo de serviço a ser cadastrado: ");
+						valorServico = jopDoub("Digite o valor de "+servico);
+
+						incluirServico(servico, valorServico);
+
 						break;
 					case 2:
 						//2 - ALTERAR SERVICO
+						indice = -1;
+
+						indice = jopInt(listaIndiceServicos());
+						servico = jopStr("Digite o índice do serviço a ser alterado: ");
+						valorServico = jopDoub("Digite o novo valor de "+servico);
+
+						alterarServico(indice, servico, valorServico);
 						break;
 					case 3:
 						//3 - EXCLUIR
+						indice = -1;
+
+						indice = jopInt(listaIndiceServicos());
+						remServico(indice);
+
 					case 4:
 						//4 - LISTAR SERVICOS CADASTRADOS
+						
+						listaIndiceServicos();
 						break;
 					case 0:
 						//0 - VOLTAR AO MENU PRINCIPAL
@@ -272,7 +295,17 @@ public class  Desafio12{
 
 					switch (controleVendas) {
 					case 1:
-						//1 - REALIZAR VENDA
+						//1 TODO - REALIZAR VENDA
+						
+						//VENDEDOR -> FUNCIONARIO -> PEGAR FUNCIONARIO NA LISTA COM INDICE
+						//SERVICO -> PEGAR SERVICO NA LISTA COM INDICE
+						//CLIENTE -> PEGAR CLIENTE NA LISTA COM INDICE
+						// VALOR -> JÁ VIRÁ COM O SERVICO
+						// QUANTIDADE -> DETERMINAR
+						// VALOR TOTAL DA VENDA -> MULTIPLICACAO
+						
+						
+						
 						break;
 					case 2:
 						//2 - ALTERAR VENDAS
@@ -303,6 +336,12 @@ public class  Desafio12{
 		}
 
 	}
+	public static String jopStr(String mensagem) {
+
+		String texto = "";
+		texto = JOptionPane.showInputDialog(mensagem);
+		return texto;
+	}
 
 	public static Integer jopInt(String mensagem) {
 
@@ -311,11 +350,11 @@ public class  Desafio12{
 		return numero;
 	}
 
-	public static String jopStr(String mensagem) {
+	public static Double jopDoub(String mensagem) {
 
-		String texto = "";
-		texto = JOptionPane.showInputDialog(mensagem);
-		return texto;
+		Double numero = 0.0;
+		numero = Double.parseDouble(JOptionPane.showInputDialog(mensagem));
+		return numero;
 	}
 
 	public static void jop(String mensagem) {
@@ -331,7 +370,7 @@ public class  Desafio12{
 
 	}
 	public static void alterarCliente (int indice, String cliente, String cnpj, String emailCliente, String celularCliente) {
-		
+
 		clientes.remove(indice);
 		clientes.add(cliente);
 		cnpjs.remove(indice);
@@ -340,19 +379,19 @@ public class  Desafio12{
 		emailsClientes.add(emailCliente);
 		celularesClientes.remove(indice);
 		celularesClientes.add(celularCliente);
-		
-		}
-	
 
-public static void remClientes (int indice) {
-	
-	clientes.remove(indice);
-	cnpjs.remove(indice); 
-	emailsClientes.remove(indice);
-	celularesClientes.remove(indice);
-	jop("Cliente Indice "+indice+  " foi removido! ");
-	
-}
+	}
+
+
+	public static void remClientes (int indice) {
+
+		clientes.remove(indice);
+		cnpjs.remove(indice); 
+		emailsClientes.remove(indice);
+		celularesClientes.remove(indice);
+		jop("Cliente Indice "+indice+  " foi removido! ");
+
+	}
 	public static String listaClientes () {
 		StringBuffer listaClientes = new StringBuffer();
 		listaClientes.append("Lista de clientes!");
@@ -379,6 +418,20 @@ public static void remClientes (int indice) {
 		}
 		return listaClientes.toString();
 	}
+	public static String listaIndiceClientes () {
+		StringBuffer lista = new StringBuffer();
+		lista.append("Lista de Clientes por índice!");
+		lista.append("\n");
+		lista.append("========================");
+		lista.append("\n");
+
+		for (int i = 0; i < clientes.size(); i++) {
+			lista.append(i+" - Cliente: "+clientes.get(i)+" Celular: "+celularesClientes.get(i));
+			lista.append("\n");
+
+		}
+		return lista.toString();
+	}
 
 
 	public static void incluirFuncionario (String funcionario, String cpf, String emailFuncionario, String celularFuncionario) {
@@ -388,9 +441,9 @@ public static void remClientes (int indice) {
 		celularesFuncionarios.add(celularFuncionario);
 		jop("Funcionário Adicionado!");
 	}
-	
+
 	public static void alterarFuncionario (int indice, String funcionario, String cpf, String emailFuncionario, String celularFuncionario) {
-	
+
 		funcionarios.remove(indice);
 		funcionarios.add(funcionario);
 		cpfs.remove(indice); 
@@ -452,17 +505,75 @@ public static void remClientes (int indice) {
 		}
 		return lista.toString();
 	}
-	public static String listaIndiceClientes () {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public static void incluirServico (String servico, Double valorServico) {
+		servicos.add(servico);
+		valorServicos.add(valorServico);
+
+		jop("Serviço Adicionado!");
+
+	}
+	public static void alterarServico (int indice, String servico, Double valorServico) {
+
+		servicos.remove(indice);
+		servicos.add(servico);
+		valorServicos.add(valorServico);
+		valorServicos.remove(indice);
+
+	}
+
+
+	public static void remServico (int indice) {
+
+		servicos.remove(indice);
+		valorServicos.remove(indice);
+
+		jop("Cliente Indice "+indice+  " foi removido! ");
+
+	}
+	public static String listaServico() {
 		StringBuffer lista = new StringBuffer();
-		lista.append("Lista de Clientes por índice!");
+		lista.append("Lista de Serviços!");
 		lista.append("\n");
 		lista.append("========================");
 		lista.append("\n");
 
-		for (int i = 0; i < clientes.size(); i++) {
-			lista.append(i+" - Cliente: "+clientes.get(i)+" Celular: "+celularesClientes.get(i));
-			lista.append("\n");
+		for (int i = 0; i < servicos.size(); i++) {
 
+			lista.append("Servico: "+ servicos.get(i));
+			lista.append("\n");
+			lista.append("Valor R$" + cnpjs.get(i));
+			lista.append("\n");
+			lista.append("========================");
+			lista.append("\n");
+		}
+		return lista.toString();
+	}
+	public static String listaIndiceServicos() {
+		StringBuffer lista = new StringBuffer();
+		lista.append("Lista de Serviços com índice!");
+		lista.append("\n");
+		lista.append("========================");
+		lista.append("\n");
+
+		for (int i = 0; i < servicos.size(); i++) {
+
+			lista.append(i + "Serviço: "+ servicos.get(i));
+			lista.append("\n");
 		}
 		return lista.toString();
 	}
