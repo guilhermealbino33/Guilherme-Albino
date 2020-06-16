@@ -1,8 +1,11 @@
-package albino
+package albino;
 
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
+
+
+// DUPLA: GUILHERME ALBINO, DOUGLAS MARÇAL
 
 public class Desafio12{
 	
